@@ -7,7 +7,7 @@ namespace MVC_EventTracker.Models
 {
     public class Event
     {
-        public int EventId { get; set; }
+        public int EventID { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Location { get; set; }
@@ -16,5 +16,7 @@ namespace MVC_EventTracker.Models
         public string OwnerENT { get; set; }
         public int BlockDuration { get; set; }
         public int Seats { get; set; }
+
+        public virtual ICollection<Registration> Registrations { get; set; }
     }
 }

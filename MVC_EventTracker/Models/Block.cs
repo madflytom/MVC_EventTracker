@@ -7,8 +7,8 @@ namespace MVC_EventTracker.Models
 {
     public class Block
     {
-        public int BlockId { get; set; }
-        public int EventId { get; set; }
+        public int BlockID { get; set; }
+        public int EventID { get; set; }
         public DateTime BlockStart { get; set; }
         public DateTime BlockEnd { get; set; }
     }

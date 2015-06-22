@@ -23,5 +23,9 @@ namespace MVC_EventTracker.DAL
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
+        public System.Data.Entity.DbSet<MVC_EventTracker.Models.Registration> Registrations { get; set; }
+
+        public System.Data.Entity.DbSet<MVC_EventTracker.Models.Block> Blocks { get; set; }
     }
 }

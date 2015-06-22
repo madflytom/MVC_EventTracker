@@ -1,5 +1,7 @@
-﻿using System;
+﻿using MVC_EventTracker.DAL;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +14,8 @@ namespace MVC_EventTracker
     {
         protected void Application_Start()
         {
+
+            Database.SetInitializer<EventTrackerContext>(new DropCreateDatabaseIfModelChanges<EventTrackerContext>());
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

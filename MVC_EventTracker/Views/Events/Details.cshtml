@@ -74,21 +74,10 @@
         <dd>
             @Html.DisplayFor(model => model.Seats)
         </dd>
-        <dt>
-            Available Blocks
-        </dt>
-        <dd>
-            <select id="blocksList">
-                @foreach (var block in ViewBag.Blocks)
-                {
-                    <option value="block.BlockId">@block.BlockStart</option>
-                }
-            </select>
-        </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EventId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EventID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

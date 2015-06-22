@@ -1,0 +1,43 @@
+﻿@model MVC_EventTracker.Models.Block
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Block</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EventID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EventID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BlockStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlockStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BlockEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BlockEnd)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.BlockId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

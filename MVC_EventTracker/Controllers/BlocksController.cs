@@ -12,107 +12,107 @@ using MVC_EventTracker.Models;
 
 namespace MVC_EventTracker.Controllers
 {
-    public class ParticipantsController : Controller
+    public class BlocksController : Controller
     {
         private EventTrackerContext db = new EventTrackerContext();
 
-        // GET: Participants
+        // GET: Blocks
         public async Task<ActionResult> Index()
         {
-            return View(await db.Participants.ToListAsync());
+            return View(await db.Blocks.ToListAsync());
         }
 
-        // GET: Participants/Details/5
+        // GET: Blocks/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Participant participant = await db.Participants.FindAsync(id);
-            if (participant == null)
+            Block block = await db.Blocks.FindAsync(id);
+            if (block == null)
             {
                 return HttpNotFound();
             }
-            return View(participant);
+            return View(block);
         }
 
-        // GET: Participants/Create
+        // GET: Blocks/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Participants/Create
+        // POST: Blocks/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ParticipantID,ParticipantENT")] Participant participant)
+        public async Task<ActionResult> Create([Bind(Include = "BlockId,EventID,BlockStart,BlockEnd")] Block block)
         {
             if (ModelState.IsValid)
             {
-                db.Participants.Add(participant);
+                db.Blocks.Add(block);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(participant);
+            return View(block);
         }
 
-        // GET: Participants/Edit/5
+        // GET: Blocks/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Participant participant = await db.Participants.FindAsync(id);
-            if (participant == null)
+            Block block = await db.Blocks.FindAsync(id);
+            if (block == null)
             {
                 return HttpNotFound();
             }
-            return View(participant);
+            return View(block);
         }
 
-        // POST: Participants/Edit/5
+        // POST: Blocks/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ParticipantID,ParticipantENT")] Participant participant)
+        public async Task<ActionResult> Edit([Bind(Include = "BlockId,EventID,BlockStart,BlockEnd")] Block block)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(participant).State = EntityState.Modified;
+                db.Entry(block).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(participant);
+            return View(block);
         }
 
-        // GET: Participants/Delete/5
+        // GET: Blocks/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Participant participant = await db.Participants.FindAsync(id);
-            if (participant == null)
+            Block block = await db.Blocks.FindAsync(id);
+            if (block == null)
             {
                 return HttpNotFound();
             }
-            return View(participant);
+            return View(block);
         }
 
-        // POST: Participants/Delete/5
+        // POST: Blocks/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Participant participant = await db.Participants.FindAsync(id);
-            db.Participants.Remove(participant);
+            Block block = await db.Blocks.FindAsync(id);
+            db.Blocks.Remove(block);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
