@@ -42,12 +42,14 @@ namespace MVC_EventTracker.Controllers
         public ActionResult Create()
         {
             ViewBag.EventID = new SelectList(db.Events, "EventID", "Title");
-            ViewBag.Blocks = new SelectList(db.Blocks, "BlockID", "BlockStart");
+            // create linq query above to filter out those blocks that already have a username associated with them
+            var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
+            ViewData["Blocks"] = blocks;
             ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT");
             return View();
         }
 
-        // TODO:  Create ajax call from font-end to build list of blocks for the event, return as a dropdown list to choose from. 
+        // TODO:  Figure out how to insert the selected block id into the registration table.
 
        
 
@@ -56,7 +58,7 @@ namespace MVC_EventTracker.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "RegistrationID,EventID,ParticipantID")] Registration registration)
+        public async Task<ActionResult> Create([Bind(Include = "RegistrationID,EventID,ParticipantID,BlockID")] Registration registration)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +69,8 @@ namespace MVC_EventTracker.Controllers
 
             ViewBag.EventID = new SelectList(db.Events, "EventID", "Title", registration.EventID);
             ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT", registration.ParticipantID);
+            var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
+            ViewData["Blocks"] = blocks;
             return View(registration);
         }
 

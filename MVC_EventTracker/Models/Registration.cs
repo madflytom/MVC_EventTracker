@@ -12,6 +12,7 @@ namespace MVC_EventTracker.Models
         public int ParticipantID { get; set; }
         public int BlockID { get; set; }
 
+        public virtual Block Block { get; set; }
         public virtual Event Event { get; set; }
         public virtual Participant Participant { get; set; }
     }

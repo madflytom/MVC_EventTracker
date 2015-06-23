@@ -18,6 +18,12 @@
         <th>
             @Html.DisplayNameFor(model => model.Participant.ParticipantENT)
         </th>
+        <th>
+            Registered Time (Start)
+        </th>
+        <th>
+            Registered Time (End)
+        </th>
         <th></th>
     </tr>
 
@@ -30,9 +36,15 @@
             @Html.DisplayFor(modelItem => item.Participant.ParticipantENT)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.RegistrationID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.RegistrationID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.RegistrationID })
+            @Html.DisplayFor(modelItem => item.Block.BlockStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Block.BlockEnd)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.RegistrationID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.RegistrationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.RegistrationID })
         </td>
     </tr>
 }
