@@ -11,5 +11,7 @@ namespace MVC_EventTracker.Models
         public int EventID { get; set; }
         public DateTime BlockStart { get; set; }
         public DateTime BlockEnd { get; set; }
+        // ToDo: Add Registration ID?
+        public virtual int RegistrationID { get; set; }
     }
 }
