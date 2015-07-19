@@ -124,7 +124,6 @@
     <Compile Include="Controllers\ParticipantsController.cs" />
     <Compile Include="Controllers\RegistrationsController.cs" />
     <Compile Include="DAL\EventTrackerContext.cs" />
-    <Compile Include="DAL\helper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +190,7 @@
     <Content Include="Views\Blocks\Edit.cshtml" />
     <Content Include="Views\Blocks\Index.cshtml" />
     <Content Include="Views\Registrations\EventRegistration.cshtml" />
+    <Content Include="Views\Registrations\CreateID.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

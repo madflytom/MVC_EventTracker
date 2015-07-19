@@ -103,9 +103,25 @@ namespace MVC_EventTracker.Controllers
             return View();
         }
 
-        // TODO:  Figure out how to insert the selected block id into the registration table.
+        // GET: Registrations/Create/EventID
+        public ActionResult CreateID(int id)
+        {
+            Event thisEvent = db.Events.Find(id);
+            ViewBag.EventID = thisEvent.EventID;
+            ViewBag.EventTitle = thisEvent.Title;
+            // create linq query above to filter out those blocks that already have a username associated with them
+            IEnumerable<SelectListItem> Blocks = (from txt in db.Blocks.Where(e => e.RegistrationID == 0 && e.EventID == id).AsEnumerable()
+                                                  select new SelectListItem()
+                                                  {
+                                                      Text = txt.BlockStart.ToString(),
+                                                      Value = txt.BlockID.ToString()
+                                                  });
 
-
+            //var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
+            ViewData["Blocks"] = Blocks;
+            ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT");
+            return View();
+        }
 
         // POST: Registrations/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -135,6 +151,30 @@ namespace MVC_EventTracker.Controllers
             return View(registration);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateID([Bind(Include = "RegistrationID,EventID,ParticipantID,BlockID")] Registration registration)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Registrations.Add(registration);
+                //search for registration block ID (after save to database) and update selected block with registration ID
+                var thisBlock = db.Blocks.Find(registration.BlockID);
+                await db.SaveChangesAsync();
+                if (thisBlock != null)
+                {
+                    thisBlock.RegistrationID = registration.RegistrationID;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.EventID = new SelectList(db.Events, "EventID", "Title", registration.EventID);
+            ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT", registration.ParticipantID);
+            var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
+            ViewData["Blocks"] = blocks;
+            return View(registration);
+        }
 
         // GET: Registrations/Edit/5
         public async Task<ActionResult> Edit(int? id)
