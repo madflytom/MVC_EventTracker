@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MVC_EventTracker.Models.Registration>
+
+@{
+    ViewBag.Title = "MyIndex";
+}
+
+<h2>My Registrations</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Event.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Participant.ParticipantENT)
+        </th>
+        <th>
+            Registered Time (Start)
+        </th>
+        <th>
+            Registered Time (End)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Event.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Participant.ParticipantENT)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Block.BlockStart)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Block.BlockEnd)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.RegistrationID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RegistrationID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RegistrationID })
+            </td>
+        </tr>
+    }
+
+</table>

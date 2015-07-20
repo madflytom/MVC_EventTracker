@@ -191,6 +191,7 @@
     <Content Include="Views\Blocks\Index.cshtml" />
     <Content Include="Views\Registrations\EventRegistration.cshtml" />
     <Content Include="Views\Registrations\CreateID.cshtml" />
+    <Content Include="Views\Registrations\MyIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

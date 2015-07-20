@@ -23,6 +23,13 @@ namespace MVC_EventTracker.Controllers
             return View(await registrations.ToListAsync());
         }
 
+        // GET: My Registrations
+        public async Task<ActionResult> MyIndex(int id)
+        {
+            var registrations = db.Registrations.Include(r => r.Event).Include(r => r.Participant).Where(r => r.ParticipantID == id);
+            return View(await registrations.ToListAsync());
+        }
+
         // GET: Registrations/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -153,10 +160,11 @@ namespace MVC_EventTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateID([Bind(Include = "RegistrationID,EventID,ParticipantID,BlockID")] Registration registration)
+        public async Task<ActionResult> CreateID([Bind(Include = "RegistrationID,EventID,ParticipantID,BlockID")] Registration registration, int id)
         {
             if (ModelState.IsValid)
             {
+                registration.EventID = id;
                 db.Registrations.Add(registration);
                 //search for registration block ID (after save to database) and update selected block with registration ID
                 var thisBlock = db.Blocks.Find(registration.BlockID);
