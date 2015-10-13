@@ -61,7 +61,7 @@ namespace MVC_EventTracker.Controllers
 
             //var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
             ViewData["Blocks"] = Blocks;
-            ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT");
+           // ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT");
             return View();
         }
 
@@ -86,7 +86,8 @@ namespace MVC_EventTracker.Controllers
             }
 
             ViewBag.EventID = new SelectList(db.Events, "EventID", "Title", registration.EventID);
-            ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT", registration.ParticipantID);
+            ViewBag.ParticipantID = Request.QueryString["ParticipantID"];
+            //ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT", registration.ParticipantID);
             var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
             ViewData["Blocks"] = blocks;
             return View(registration);
@@ -111,7 +112,7 @@ namespace MVC_EventTracker.Controllers
         }
 
         // GET: Registrations/Create/EventID
-        public ActionResult CreateID(int id)
+        public ActionResult CreateID(int id, string ParticipantID)
         {
             Event thisEvent = db.Events.Find(id);
             ViewBag.EventID = thisEvent.EventID;
@@ -126,7 +127,7 @@ namespace MVC_EventTracker.Controllers
 
             //var blocks = db.Blocks.Select(e => new SelectListItem { Text = e.BlockStart.ToString(), Value = e.BlockID.ToString() });
             ViewData["Blocks"] = Blocks;
-            ViewBag.ParticipantID = new SelectList(db.Participants, "ParticipantID", "ParticipantENT");
+            ViewBag.ParticipantID = new SelectList(db.Participants.Where(p => p.ParticipantENT == ParticipantID), "ParticipantID", "ParticipantENT");
             return View();
         }
 

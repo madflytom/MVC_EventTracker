@@ -67,17 +67,21 @@ namespace MVC_EventTracker.Controllers
 
             var duration = (selectedEvent.EndDateTime - selectedEvent.StartDateTime).TotalMinutes;
             var slots = duration / selectedEvent.BlockDuration;
-            for (int i = 0; i < slots; i++)
+            var seats = selectedEvent.Seats;
+            for (int j = 0; j < seats; j++)
             {
-                DateTime startTime = selectedEvent.StartDateTime.AddMinutes(selectedEvent.BlockDuration * i);
-                db.Blocks.Add(new Block
+                for (int i = 0; i < slots; i++)
                 {
-                    BlockID = i,
-                    EventID = selectedEvent.EventID,
-                    BlockStart = startTime,
-                    BlockEnd = startTime.AddMinutes(selectedEvent.BlockDuration)
-                });
-                db.SaveChanges();
+                    DateTime startTime = selectedEvent.StartDateTime.AddMinutes(selectedEvent.BlockDuration * i);
+                    db.Blocks.Add(new Block
+                    {
+                        BlockID = i,
+                        EventID = selectedEvent.EventID,
+                        BlockStart = startTime,
+                        BlockEnd = startTime.AddMinutes(selectedEvent.BlockDuration)
+                    });
+                    db.SaveChanges();
+                }
             }
 
             //return blockList;

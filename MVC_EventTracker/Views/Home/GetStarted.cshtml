@@ -1,0 +1,58 @@
+﻿@model MVC_EventTracker.Models.Participant
+
+@{
+    ViewBag.Title = "GetStarted";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Get Started</h2>
+@* Enter user id, or choose "New User" *@
+<div id="existingUser">
+    <p>Please enter your user ID.</p>
+    <input id="userID" type="text" />
+    <input id="userSubmit" type="button" title="Submit" value="Submit" />
+    <p>New user?  Click here.</p>
+</div>
+
+<div id="newUser" hidden>
+    <p id="userNameMessage"></p>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#userSubmit').click(function () {
+                var userName = $('#userID').val();
+                var serviceURL = '/Participants/GetParticipant' + '/' + userName;
+                $.ajax({
+                    type: "GET",
+                    url: serviceURL,
+                    data: param = "",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: successFunc,
+                    error: errorFunc
+                });
+            });
+
+            function successFunc(data, status) {
+                if (data != "Username not found") {
+                    var username = data.toString();
+                    var url = '@Url.Action("Index", "Events", new { ParticipantID = "__id__" })';
+                    window.location.href = url.replace('__id__', username);
+                } else {
+                    $('#existingUser').fadeOut();
+                    $('#newUser').fadeIn();
+                    var url2 = '@Url.Action("Create", "Participants")';
+                    $('#userNameMessage').html("The username doesn't exisit. <a href='" + url2 + "'>Click here to create one.</a>")
+                }
+            }
+
+            function errorFunc() {
+                alert('error');
+            }
+        });
+    </script>
+}
+
+
+

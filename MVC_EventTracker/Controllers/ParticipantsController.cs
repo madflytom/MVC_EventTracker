@@ -22,6 +22,23 @@ namespace MVC_EventTracker.Controllers
             return View(await db.Participants.ToListAsync());
         }
 
+        // GET: Participants for ajax call
+        public ActionResult GetParticipant(string id)
+        {
+            db.Configuration.ProxyCreationEnabled = false;
+            //Participant participant = db.Participants.Find(id);
+            Participant participant = db.Participants.Where(p => p.ParticipantENT == id).FirstOrDefault();
+            if (participant != null)
+            {
+                return Json(participant.ParticipantENT, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json("Username not found", JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
         // GET: Participants/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -54,7 +71,7 @@ namespace MVC_EventTracker.Controllers
             {
                 db.Participants.Add(participant);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Events", new { ParticipantID = participant.ParticipantENT });
             }
 
             return View(participant);
